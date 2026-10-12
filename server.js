@@ -3,12 +3,16 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+const postRoutes = require('./routes/postRoutes');
+
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
+// API Routes
+app.use('/api/posts', postRoutes);
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB Connected Successfully!'))
