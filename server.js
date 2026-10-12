@@ -14,6 +14,8 @@ app.use(express.json());
 
 // API Routes
 app.use('/api/posts', postRoutes);
+app.use('/api/auth', authRoutes);
+
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB Connected Successfully!'))
