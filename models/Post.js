@@ -7,23 +7,36 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     snippet: {
-      type: String, // হোমপেজে অল্প একটু লেখা দেখানোর জন্য
+      type: String, 
       required: true,
     },
     content: {
-      type: String, // মূল নোট বা বিস্তারিত লেখা
+      type: String, 
       required: true,
     },
     category: {
-      type: String, // যেমন: DBMS, Networking, Math
+      type: String, 
       required: true,
     },
     views: {
       type: Number,
       default: 0,
     },
+    // 🚀 SEO Fields
+    metaTitle: {
+      type: String,
+      default: "",
+    },
+    metaDescription: {
+      type: String,
+      default: "",
+    },
+    keywords: {
+      type: String,
+      default: "",
+    }
   },
-  { timestamps: true },
-); // timestamps true দিলে কখন পোস্ট করা হয়েছে (createdAt) তা অটো সেভ হবে
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Post", postSchema);
