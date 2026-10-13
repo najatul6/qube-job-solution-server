@@ -1,31 +1,36 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
 
-const postRoutes = require('./routes/postRoutes');
-const authRoutes = require('./routes/authRoutes');
-const contactRoutes = require('./routes/contactRoutes');
+const postRoutes = require("./routes/postRoutes");
+const authRoutes = require("./routes/authRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://qube-job-solution.vercel.app, http://localhost:5000",
+  }),
+);
 app.use(express.json());
 
 // API Routes
-app.use('/api/posts', postRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/contact', contactRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/contact", contactRoutes);
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ MongoDB Connected Successfully!'))
-  .catch((err) => console.log('❌ MongoDB Connection Failed:', err));
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB Connected Successfully!"))
+  .catch((err) => console.log("❌ MongoDB Connection Failed:", err));
 
 // Basic Test Route
-app.get('/', (req, res) => {
-  res.send('Qube Job Solution Backend API is running...');
+app.get("/", (req, res) => {
+  res.send("Qube Job Solution Backend API is running...");
 });
 
 // Start Server
