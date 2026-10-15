@@ -6,6 +6,7 @@ require("dotenv").config();
 const postRoutes = require("./routes/postRoutes");
 const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+import categoryRoutes from './routes/categoryRoutes.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/api/posts", postRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // MongoDB Connection
 mongoose
