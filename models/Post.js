@@ -7,15 +7,16 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     snippet: {
-      type: String, 
+      type: String,
       required: true,
     },
     content: {
-      type: String, 
+      type: String,
       required: true,
     },
     category: {
-      type: String, 
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
     views: {
@@ -34,9 +35,9 @@ const postSchema = new mongoose.Schema(
     keywords: {
       type: String,
       default: "",
-    }
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Post", postSchema);
