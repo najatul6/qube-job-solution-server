@@ -6,7 +6,7 @@ require("dotenv").config();
 const postRoutes = require("./routes/postRoutes");
 const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require("./routes/contactRoutes");
-import categoryRoutes from './routes/categoryRoutes.js';
+const categoryRoutes = require ('./routes/categoryRoutes.js');
 
 const app = express();
 
