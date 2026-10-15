@@ -1,6 +1,9 @@
-import express from 'express';
-import Category from '../models/Category.js'; // Model er path thik ache kina check kore niben
-import slugify from 'slugify';
+const express = require('express')
+const Category = require ('../models/Category.js')
+const slugify = require('slugify')
+// import express from 'express';
+// import Category from '../models/Category.js'; // Model er path thik ache kina check kore niben
+// import slugify from 'slugify';
 
 const router = express.Router();
 
@@ -60,4 +63,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
