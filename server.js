@@ -1,7 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const { SitemapStream, streamToPromise } = require("sitemap");
 require("dotenv").config();
+
+const Post = require("./models/Post");
+const Category = require("./models/Category");
 
 const postRoutes = require("./routes/postRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -17,6 +21,50 @@ app.use(
   }),
 );
 app.use(express.json());
+
+// 🚀 Dynamic Auto Sitemap Route
+app.get("/sitemap.xml", async (req, res) => {
+  try {
+    res.header("Content-Type", "application/xml");
+
+    const smStream = new SitemapStream({
+      hostname: "https://qube-job-solution.vercel.app",
+    });
+
+    // 1. Static Pages
+    smStream.write({ url: "/", changefreq: "daily", priority: 1.0 });
+    smStream.write({ url: "/contact", changefreq: "monthly", priority: 0.5 });
+
+    // 2. Database Categories
+    const categories = await Category.find({}, "slug");
+    categories.forEach((cat) => {
+      smStream.write({
+        url: `/category/${cat.slug}`,
+        changefreq: "daily",
+        priority: 0.8,
+      });
+    });
+
+    // 3. Database Posts
+    const posts = await Post.find({}, "_id updatedAt");
+    posts.forEach((post) => {
+      smStream.write({
+        url: `/post/${post._id}`,
+        lastmod: post.updatedAt,
+        changefreq: "weekly",
+        priority: 0.7,
+      });
+    });
+
+    smStream.end();
+
+    const sitemapData = await streamToPromise(smStream);
+    res.send(sitemapData.toString());
+  } catch (error) {
+    console.error("Sitemap generation error:", error);
+    res.status(500).end();
+  }
+});
 
 // API Routes
 app.use("/api/posts", postRoutes);
