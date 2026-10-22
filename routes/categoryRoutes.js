@@ -1,13 +1,10 @@
 const express = require('express')
 const Category = require ('../models/Category.js')
 const slugify = require('slugify')
-// import express from 'express';
-// import Category from '../models/Category.js'; // Model er path thik ache kina check kore niben
-// import slugify from 'slugify';
 
 const router = express.Router();
 
-// 1. CREATE CATEGORY (POST /api/categories)
+// 1. CREATE CATEGORY 
 router.post('/', async (req, res) => {
   try {
     const { name, description } = req.body;
@@ -16,10 +13,8 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Category name is required' });
     }
 
-    // Name theke auto URL slug toiri kora (e.g., "Govt Jobs" -> "govt-jobs")
     const slug = slugify(name, { lower: true, strict: true });
 
-    // Same category age theke ache kina check kora
     const existingCategory = await Category.findOne({ slug });
     if (existingCategory) {
       return res.status(400).json({ error: 'Category already exists' });
@@ -34,10 +29,9 @@ router.post('/', async (req, res) => {
   }
 });
 
-// 2. GET ALL CATEGORIES (GET /api/categories)
+// 2. GET ALL CATEGORIES 
 router.get('/', async (req, res) => {
   try {
-    // Shob category fetch kora (notun gula age asbe)
     const categories = await Category.find({}).sort({ createdAt: -1 });
     res.status(200).json(categories);
   } catch (error) {
@@ -46,7 +40,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 3. DELETE CATEGORY (DELETE /api/categories/:id)
+// 3. DELETE CATEGORY 
 router.delete('/:id', async (req, res) => {
   try {
     const categoryId = req.params.id;
