@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// PATCH: 
+// PATCH: Mark a contact message as read
 router.patch('/:id', async (req, res) => {
   try {
     const updatedMessage = await Contact.findByIdAndUpdate(
