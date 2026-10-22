@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET: 
+// GET: Retrieve all contact messages
 router.get('/', async (req, res) => {
   try {
     const messages = await Contact.find().sort({ createdAt: -1 });
