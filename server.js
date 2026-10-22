@@ -17,7 +17,10 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: ["https://qube-job-solution.vercel.app", "http://localhost:5173"],
+    origin: [
+      "https://qube-job-solution.vercel.app"
+      // , "http://localhost:5173"
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
   })
